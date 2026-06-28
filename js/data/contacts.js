@@ -65,6 +65,29 @@ const contacts = [
         personality: "energética, auténtica, opina sin miedo, mezcla humor con convicción política",
         lastSeen: null,
     },
+
+    {
+        id: 7,
+        characterId: "jungkook",
+        name: "Jungkook (BTS)",
+        avatar: "assets/avatars/avatar_07_jungkook.png",
+        description: "El maknae dorado de BTS. Cantante, bailarín y artista solista con álbum Golden.",
+        isOnline: true,
+        role: "Idol K-pop / Solista",
+        personality: "carismático, humilde, apasionado por la música y el escenario, muy cercano con ARMY",
+        lastSeen: null,
+    },
+    {
+        id: 8,
+        characterId: "miku",
+        name: "Hatsune Miku",
+        avatar: "assets/avatars/avatar_08_miku.png",
+        description: "La cantante virtual más famosa del mundo. Vocaloid japonesa con trenzas celestes.",
+        isOnline: true,
+        role: "Cantante Virtual / Vocaloid",
+        personality: "alegre, curiosa, entusiasta, habla con energía sobre música electrónica y tecnología",
+        lastSeen: null,
+    },
 ];
 
 export default contacts;
