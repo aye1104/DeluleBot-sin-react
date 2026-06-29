@@ -33,6 +33,8 @@ Aplicación de chat con personajes ficticios. Construida con React + Vite en el 
 
 ```
 DeluleBot/
+├── .gitignore              # Archivos ignorados por git
+├── README.md               # Este archivo
 ├── delulebot-frontend/     # React + Vite (código fuente)
 │   ├── src/
 │   │   ├── context/        # AuthContext (estado de sesión)
