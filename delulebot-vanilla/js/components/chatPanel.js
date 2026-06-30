@@ -1,5 +1,5 @@
 import { getUser } from '../auth.js'
-import { getMessages, addMessage, addLocalMessage, updateMessageStatus, addReaction, deleteMessage, markAsRead } from '../messages.js'
+import { getMessages, addMessage, updateMessageStatus, addReaction, deleteMessage, markAsRead } from '../messages.js'
 import { getAutoReply } from '../bot.js'
 import { createMessageBubble } from './messageBubble.js'
 import { escapeHtml, safeFoto } from '../utils.js'
@@ -67,7 +67,7 @@ export function createChatPanel({ onBack, onDeleteConversation }) {
     isTyping = true; renderTyping()
     setTimeout(() => {
       isTyping = false
-      addLocalMessage(cId, {
+      addMessage(cId, {
         id: Date.now().toString(36) + Math.random().toString(36).slice(2),
         senderId: cId,
         text: getAutoReply(contact, text),
@@ -256,8 +256,11 @@ export function createChatPanel({ onBack, onDeleteConversation }) {
     main.querySelector('#cp-search-toggle').addEventListener('click', e => {
       e.stopPropagation(); showSearch = !showSearch; searchQuery = ''; searchIdx = -1
       const bar = main.querySelector('#cp-search-bar')
-      if (showSearch) { bar.classList.add('visible'); main.querySelector('#cp-search-input').focus() }
-      else bar.classList.remove('visible')
+      if (showSearch) {
+        bar.classList.add('visible')
+        const inp = main.querySelector('#cp-search-input')
+        inp.value = ''; inp.focus()
+      } else bar.classList.remove('visible')
       renderMessages()
     })
     main.querySelector('#cp-search-input').addEventListener('input', e => { searchQuery = e.target.value; searchIdx = 0; updateCount(); renderMessages() })

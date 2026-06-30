@@ -1,4 +1,4 @@
-// Escapa caracteres HTML para prevenir XSS al insertar en innerHTML
+// Previene XSS al insertar strings en innerHTML
 export function escapeHtml(str) {
   if (str == null) return ''
   return String(str)
@@ -9,7 +9,6 @@ export function escapeHtml(str) {
     .replace(/'/g, '&#039;')
 }
 
-// Valida que una URL de foto sea segura antes de usarla como src
 export function safeFoto(url) {
   if (!url) return ''
   if (url.startsWith('/assets/')) return url

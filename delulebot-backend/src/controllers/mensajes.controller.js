@@ -8,18 +8,20 @@ function getAll(req, res) {
 }
 
 function create(req, res) {
-  const { id, text, timestamp } = req.body;
+  const { id, text, timestamp, senderId } = req.body;
   if (!text) return res.status(400).json({ error: 'text es requerido' });
+  const contactoId = req.params.contactoId;
+  const resolvedSender = (senderId && senderId !== req.user.id) ? String(contactoId) : req.user.id;
   const nuevo = {
     id:        id        || Date.now().toString(36) + Math.random().toString(36).slice(2),
-    senderId:  req.user.id,
+    senderId:  resolvedSender,
     text,
     timestamp: timestamp || Date.now(),
     status:    'sent',
     reactions: [],
     deleted:   false,
   };
-  const guardado = mensajesService.add(req.user.id, req.params.contactoId, nuevo);
+  const guardado = mensajesService.add(req.user.id, contactoId, nuevo);
   res.status(201).json(guardado);
 }
 

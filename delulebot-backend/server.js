@@ -52,8 +52,9 @@ app.use('/api/auth/registro', authLimiter);
 app.use('/api/auth', require('./src/routes/auth.routes'));
 
 // ── Rutas protegidas (requieren sesión activa) ─────────────────
-app.use('/api/contactos',                      requireAuth, require('./src/routes/contactos.routes'));
+// mensajes antes que contactos para evitar doble requireAuth en /contactos/:id/mensajes
 app.use('/api/contactos/:contactoId/mensajes', requireAuth, require('./src/routes/mensajes.routes'));
+app.use('/api/contactos',                      requireAuth, require('./src/routes/contactos.routes'));
 app.use('/api/perfil',                         requireAuth, require('./src/routes/perfil.routes'));
 
 // ── Fallback: sirve index.html para rutas desconocidas ─────────

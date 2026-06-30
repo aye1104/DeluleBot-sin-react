@@ -1,4 +1,4 @@
-const { getCollection, saveCollection } = require('../../config/db');
+const { getCollection } = require('../../config/db');
 
 const COLLECTION = 'contactos';
 

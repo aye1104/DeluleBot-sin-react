@@ -35,13 +35,6 @@ export function getLastMessage(contactId) {
   return list.length ? list[list.length - 1] : null
 }
 
-// Agrega un mensaje local sin llamar al backend (para respuestas del bot)
-export function addLocalMessage(contactId, msg) {
-  if (!msgs[contactId]) msgs[contactId] = []
-  msgs[contactId].push(msg)
-  tick()
-}
-
 export function addMessage(contactId, msg) {
   if (!msgs[contactId]) msgs[contactId] = []
   msgs[contactId].push(msg)
