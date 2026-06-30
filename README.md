@@ -6,14 +6,15 @@ Aplicación de chat con personajes ficticios. Frontend en HTML/CSS/JS vanilla se
 
 ## Stack
 
-| Capa       | Tecnología                                        |
-|------------|---------------------------------------------------|
-| Frontend   | HTML, CSS, JavaScript (ES Modules, sin bundler)   |
-| Backend    | Node.js + Express                                 |
-| Auth       | `express-session` + cookie HttpOnly               |
-| Contraseñas| `crypto.pbkdf2Sync` + salt aleatorio (10.000 it.) |
-| Datos      | JSON files por usuario (`config/db.js`)           |
-| Seguridad  | Rate limiting (`express-rate-limit`), XSS escape  |
+| Capa        | Tecnología                                              |
+|-------------|---------------------------------------------------------|
+| Frontend    | HTML, CSS, JavaScript (ES Modules, sin bundler)         |
+| Estilos     | CSS custom + Bootstrap 5.3 (clases utilitarias)         |
+| Backend     | Node.js + Express 5                                     |
+| Auth        | `express-session` + cookie HttpOnly + SameSite strict   |
+| Contraseñas | `crypto.pbkdf2Sync` + salt aleatorio (10.000 it.)       |
+| Datos       | JSON files por usuario (`config/db.js` con cache Map)   |
+| Seguridad   | `express-rate-limit`, XSS escape, validación data URLs  |
 
 ---
 
