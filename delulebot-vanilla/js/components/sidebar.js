@@ -10,15 +10,27 @@ export function createSidebar({ contacts, activeContactId, onSelectContact, onOp
   aside.className = `sidebar${hidden ? ' sidebar--hidden' : ''}`
   aside.dataset.search = ''
 
-  function render() {
-    const user   = getUser()
+  function renderList() {
     const search = aside.dataset.search || ''
-
     let list = [...contacts]
       .sort((a, b) => (getLastMessage(b.id)?.timestamp || 0) - (getLastMessage(a.id)?.timestamp || 0))
-
     if (search) list = list.filter(c => c.nombre.toLowerCase().includes(search.toLowerCase()))
 
+    const listEl = aside.querySelector('#sb-list')
+    if (!listEl) return
+    listEl.innerHTML = ''
+    list.forEach(c => listEl.appendChild(createChatCard({
+      contact: c,
+      isActive: c.id === activeContactId,
+      lastMsg: getLastMessage(c.id),
+      unreadCount: getUnreadCount(c.id),
+      onClick: () => onSelectContact(c.id),
+    })))
+  }
+
+  function renderHeader() {
+    aside.dataset.search = ''
+    const user = getUser()
     aside.innerHTML = `
       <div class="sidebar__header">
         <div class="sidebar__header-row">
@@ -42,10 +54,9 @@ export function createSidebar({ contacts, activeContactId, onSelectContact, onOp
         </div>
         <div class="sidebar__search">
           <img class="sidebar__search-icon" src="/assets/icons/buscador.svg" alt="Buscar" />
-          <input type="text" id="sb-search" placeholder="Buscar chat..." autocomplete="off" value="${escapeHtml(search)}" />
+          <input type="text" id="sb-search" placeholder="Buscar chat..." autocomplete="off" />
         </div>
       </div>
-
       <div class="sidebar__list" id="sb-list"></div>
     `
 
@@ -60,30 +71,29 @@ export function createSidebar({ contacts, activeContactId, onSelectContact, onOp
       avatarWrap.appendChild(makePh(user?.name))
     }
 
-    // Lista
-    const listEl = aside.querySelector('#sb-list')
-    list.forEach(c => listEl.appendChild(createChatCard({
-      contact: c,
-      isActive: c.id === activeContactId,
-      lastMsg: getLastMessage(c.id),
-      unreadCount: getUnreadCount(c.id),
-      onClick: () => onSelectContact(c.id),
-    })))
-
-    // Eventos
+    // Eventos (se registran una sola vez junto con el header)
     aside.querySelector('#sb-profile').addEventListener('click', onOpenProfile)
     aside.querySelector('#sb-logout').addEventListener('click', e => { e.stopPropagation(); onLogout() })
-    aside.querySelector('#sb-search').addEventListener('input', e => { aside.dataset.search = e.target.value; render() })
+    aside.querySelector('#sb-search').addEventListener('input', e => {
+      aside.dataset.search = e.target.value
+      renderList()
+    })
+  }
+
+  function render() {
+    renderHeader()
+    renderList()
   }
 
   render()
 
   return {
     el: aside,
-    update({ contacts: c, activeContactId: a, hidden: h }) {
+    update({ contacts: c, activeContactId: a, hidden: h, reloadHeader = false }) {
       contacts = c; activeContactId = a
       aside.className = `sidebar${h ? ' sidebar--hidden' : ''}`
-      render()
+      if (reloadHeader) render()
+      else renderList()
     },
   }
 }

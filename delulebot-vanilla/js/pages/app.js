@@ -23,7 +23,7 @@ export function renderApp(container, navigate) {
     contacts, activeContactId,
     onSelectContact: selectContact,
     onOpenProfile: () => openProfileModal({
-      onSaved: () => sidebarInst.update({ contacts, activeContactId, hidden: sidebarHidden }),
+      onSaved: () => sidebarInst.update({ contacts, activeContactId, hidden: sidebarHidden, reloadHeader: true }),
     }),
     onLogout: handleLogout,
     hidden: sidebarHidden,
@@ -46,7 +46,7 @@ export function renderApp(container, navigate) {
     if (cRes.status === 'fulfilled') contacts = cRes.value
     if (pRes.status === 'fulfilled') saveProfile(pRes.value)
     contacts.forEach(c => loadMessages(c.id))
-    sidebarInst.update({ contacts, activeContactId, hidden: sidebarHidden })
+    sidebarInst.update({ contacts, activeContactId, hidden: sidebarHidden, reloadHeader: true })
   })
 
   // Precargar mensajes locales

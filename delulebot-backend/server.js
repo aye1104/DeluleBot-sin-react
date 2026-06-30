@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express      = require('express');
 const session      = require('express-session');
+const FileStore    = require('session-file-store')(session);
 const rateLimit    = require('express-rate-limit');
 const path         = require('path');
 const { connectDB } = require('./config/db');
@@ -15,6 +16,7 @@ connectDB();
 app.use(express.json({ limit: '10mb' }));
 
 app.use(session({
+  store:             new FileStore({ path: path.join(__dirname, 'data/sessions'), logFn: () => {} }),
   secret:            process.env.SESSION_SECRET || 'delulebot-secret-dev',
   resave:            false,
   saveUninitialized: false,

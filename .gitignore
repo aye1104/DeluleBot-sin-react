@@ -13,6 +13,7 @@ node_modules/
 delulebot-backend/data/usuarios.json
 delulebot-backend/data/mensajes_*.json
 delulebot-backend/data/perfil_*.json
+delulebot-backend/data/sessions/
 
 # ── Logs ──────────────────────────────────────────────────────
 *.log

@@ -136,9 +136,16 @@ export function createChatPanel({ onBack, onDeleteConversation }) {
     menu.addEventListener('click', ev => ev.stopPropagation())
 
     if (!msg.reactions?.some(r => r.userId === user?.id)) {
-      const ri = document.createElement('div'); ri.className = 'message-context-menu__item'
-      ri.innerHTML = `<img src="/assets/icons/emoji-reaccion.svg" width="15" height="15" alt="" /> Reaccionar`
-      ri.addEventListener('click', () => { addReaction(contact.id, msg.id, '❤️'); closeCtx(); renderMessages() })
+      const ri = document.createElement('div')
+      ri.className = 'message-context-menu__reactions'
+      ri.innerHTML = REACTION_EMOJIS.map(e => `<span class="message-context-menu__emoji" data-emoji="${e}">${e}</span>`).join('')
+      ri.querySelectorAll('.message-context-menu__emoji').forEach(btn => {
+        btn.addEventListener('click', ev => {
+          ev.stopPropagation()
+          addReaction(contact.id, msg.id, btn.dataset.emoji)
+          closeCtx(); renderMessages()
+        })
+      })
       menu.appendChild(ri)
     }
     if (isOwn) {

@@ -530,6 +530,27 @@
     background: #fef2f2;
     }
 
+    .message-context-menu__reactions {
+    display: flex;
+    gap: 0.2rem;
+    padding: 0.45rem 0.6rem;
+    border-bottom: 1px solid #f0f0f0;
+    }
+
+    .message-context-menu__emoji {
+    font-size: 1.35rem;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 0.15rem 0.3rem;
+    transition: background 0.1s, transform 0.1s;
+    line-height: 1;
+    }
+
+    .message-context-menu__emoji:hover {
+    background: #f0f0f0;
+    transform: scale(1.25);
+    }
+
     /* ---------- Indicador "escribiendo..." en el área de mensajes ---------- */
     .typing-indicator {
     display: none;

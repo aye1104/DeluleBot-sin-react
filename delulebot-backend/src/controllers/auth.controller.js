@@ -13,7 +13,10 @@ function login(req, res) {
   }
 
   req.session.userId = result.user.id;
-  res.json({ user: result.user });
+  req.session.save(err => {
+    if (err) return res.status(500).json({ error: 'Error al crear sesión.' });
+    res.json({ user: result.user });
+  });
 }
 
 function registro(req, res) {
@@ -35,7 +38,10 @@ function registro(req, res) {
   try {
     const user = authService.register(trimmedUser, password, name);
     req.session.userId = user.id;
-    res.status(201).json({ user });
+    req.session.save(err => {
+      if (err) return res.status(500).json({ error: 'Error al crear sesión.' });
+      res.status(201).json({ user });
+    });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
