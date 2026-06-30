@@ -1,12 +1,5 @@
 const authService = require('../services/auth.service');
 
-const COOKIE_OPTS = {
-  httpOnly: true,
-  sameSite: 'strict',
-  secure:   process.env.NODE_ENV === 'production',
-  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
-};
-
 function login(req, res) {
   const { username, password } = req.body;
   if (!username || !password)
@@ -19,9 +12,8 @@ function login(req, res) {
     return res.status(401).json({ error: 'Contraseña incorrecta.', code: 'WRONG_PASSWORD' });
   }
 
-  const { ok: _, token, ...user } = result;
-  res.cookie('session_token', token, COOKIE_OPTS);
-  res.json({ user });
+  req.session.userId = result.user.id;
+  res.json({ user: result.user });
 }
 
 function registro(req, res) {
@@ -37,14 +29,12 @@ function registro(req, res) {
     return res.status(400).json({ error: 'El usuario no puede superar 30 caracteres.' });
   if (!/^[a-zA-Z0-9_]+$/.test(trimmedUser))
     return res.status(400).json({ error: 'El usuario solo puede tener letras, números y guiones bajos.' });
-
   if (password.length < 4)
     return res.status(400).json({ error: 'La contraseña debe tener al menos 4 caracteres.' });
 
   try {
-    const result = authService.register(trimmedUser, password, name);
-    const { token, ...user } = result;
-    res.cookie('session_token', token, COOKIE_OPTS);
+    const user = authService.register(trimmedUser, password, name);
+    req.session.userId = user.id;
     res.status(201).json({ user });
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -52,8 +42,10 @@ function registro(req, res) {
 }
 
 function logout(req, res) {
-  res.clearCookie('session_token');
-  res.json({ ok: true });
+  req.session.destroy(() => {
+    res.clearCookie('connect.sid');
+    res.json({ ok: true });
+  });
 }
 
 module.exports = { login, registro, logout };

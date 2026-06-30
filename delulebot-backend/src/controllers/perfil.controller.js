@@ -22,8 +22,14 @@ function update(req, res) {
     changes.descripcion = String(descripcion).trim();
   }
   if (photo !== undefined) {
-    if (photo !== null && typeof photo === 'string' && photo.length > 300_000)
-      return res.status(400).json({ error: 'La foto es demasiado grande.' });
+    if (photo !== null) {
+      if (typeof photo !== 'string')
+        return res.status(400).json({ error: 'Formato de foto no válido.' });
+      if (!/^data:image\/(jpeg|png|webp);base64,/.test(photo))
+        return res.status(400).json({ error: 'Formato de foto no válido. Usá JPEG, PNG o WebP.' });
+      if (photo.length > 300_000)
+        return res.status(400).json({ error: 'La foto es demasiado grande (máx. 300 KB).' });
+    }
     changes.photo = photo;
   }
 

@@ -1,5 +1,7 @@
 const mensajesService = require('../services/mensajes.service');
 
+const VALID_STATUS = ['sent', 'delivered', 'read'];
+
 function getAll(req, res) {
   const mensajes = mensajesService.getByContacto(req.user.id, req.params.contactoId);
   res.json(mensajes);
@@ -23,7 +25,8 @@ function create(req, res) {
 
 function updateStatus(req, res) {
   const { status } = req.body;
-  if (!status) return res.status(400).json({ error: 'status es requerido' });
+  if (!status || !VALID_STATUS.includes(status))
+    return res.status(400).json({ error: `status debe ser: ${VALID_STATUS.join(', ')}` });
   const updated = mensajesService.updateStatus(req.user.id, req.params.contactoId, req.params.msgId, status);
   if (!updated) return res.status(404).json({ error: 'Mensaje no encontrado' });
   res.json(updated);

@@ -1,7 +1,0 @@
-{
-  "liveServer.settings.ignoreFiles": [
-    "delulebot-backend/**",
-    ".git/**",
-    "node_modules/**"
-  ]
-}

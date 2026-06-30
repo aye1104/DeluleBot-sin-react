@@ -7,7 +7,7 @@ router.get('/',                         controller.getAll);
 router.post('/',                        controller.create);
 router.patch('/:msgId/status',          controller.updateStatus);
 router.patch('/:msgId/reaction',        controller.addReaction);
-router.patch('/:msgId/delete',          controller.deleteMsg);
+router.delete('/:msgId',                controller.deleteMsg);
 router.delete('/',                      controller.clearAll);
 
 module.exports = router;

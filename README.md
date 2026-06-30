@@ -1,63 +1,64 @@
 # DeluleBot
 
-Aplicación de chat con personajes ficticios. Construida con React + Vite en el frontend y Express en el backend.
+Aplicación de chat con personajes ficticios. Frontend en HTML/CSS/JS vanilla servido directamente por Express — sin bundler, sin framework.
 
 ---
 
-## Características
+## Stack
 
-- Registro e inicio de sesión con sesión persistente (cookie HttpOnly)
-- Chat con 8 personajes, respuestas automáticas por palabras clave
-- Reacciones a mensajes (una sola vez por mensaje)
-- Eliminación suave de mensajes
-- Búsqueda dentro del chat
-- Edición de perfil con foto (compresión automática en canvas)
-- Conversaciones persistidas en el servidor
-- Diseño responsive (mobile y desktop)
-
----
-
-## Stack tecnológico
-
-| Capa       | Tecnología                          |
-|------------|-------------------------------------|
-| Frontend   | React 19, React Router v7, Vite     |
-| Backend    | Node.js, Express 5                  |
-| Auth       | Cookie HttpOnly, pbkdf2 + salt      |
-| Estilos    | CSS custom + Bootstrap 5 (parcial)  |
-| Datos      | JSON files (via módulo `config/db`) |
+| Capa       | Tecnología                                        |
+|------------|---------------------------------------------------|
+| Frontend   | HTML, CSS, JavaScript (ES Modules, sin bundler)   |
+| Backend    | Node.js + Express                                 |
+| Auth       | `express-session` + cookie HttpOnly               |
+| Contraseñas| `crypto.pbkdf2Sync` + salt aleatorio (10.000 it.) |
+| Datos      | JSON files por usuario (`config/db.js`)           |
+| Seguridad  | Rate limiting (`express-rate-limit`), XSS escape  |
 
 ---
 
-## Estructura del proyecto
+## Estructura
 
 ```
 DeluleBot/
-├── .gitignore              # Archivos ignorados por git
-├── README.md               # Este archivo
-├── delulebot-frontend/     # React + Vite (código fuente)
-│   ├── src/
-│   │   ├── context/        # AuthContext (estado de sesión)
-│   │   ├── hooks/          # useMessages (cache en memoria)
-│   │   ├── services/       # Llamadas a la API
-│   │   ├── pages/          # LoginPage, AppPage
-│   │   ├── components/     # Sidebar, ChatPanel, ProfileModal, etc.
-│   │   ├── data/           # Contactos locales, respuestas del bot
-│   │   └── utils/          # bot.js (lógica de respuestas)
-│   └── public/             # CSS, iconos, imágenes
+├── .gitignore
+├── README.md
 │
-└── delulebot-backend/      # Express API
-    ├── src/
-    │   ├── controllers/    # auth, mensajes, perfil, contactos
-    │   ├── services/       # Lógica de negocio
-    │   ├── routes/         # Definición de rutas
-    │   └── middleware/     # requireAuth
-    ├── config/             # db.js (lectura/escritura de JSON)
-    ├── data/               # Archivos JSON (generados en runtime)
-    └── server.js           # Entry point
+├── delulebot-vanilla/          # Frontend estático
+│   ├── index.html
+│   ├── assets/
+│   │   ├── icons/              # SVG de la UI
+│   │   └── img/                # Fotos de los personajes
+│   ├── css/
+│   │   ├── main.css
+│   │   ├── chat.css
+│   │   ├── sidebar.css
+│   │   └── responsive.css
+│   └── js/
+│       ├── main.js             # Router SPA
+│       ├── api.js              # fetch wrapper + interceptor 401
+│       ├── auth.js             # Sesión en localStorage (cache)
+│       ├── messages.js         # Estado de mensajes + rollback optimista
+│       ├── bot.js              # Lógica de respuestas automáticas
+│       ├── utils.js            # escapeHtml, safeFoto
+│       ├── components/         # chatPanel, sidebar, chatCard, messageBubble, profileModal
+│       ├── pages/              # login.js, app.js
+│       └── data/               # contacts.js, responses.js (datos locales del bot)
+│
+└── delulebot-backend/          # API Express
+    ├── server.js               # Entry point
+    ├── .env.example            # Variables de entorno de ejemplo
+    ├── config/
+    │   └── db.js               # Lectura/escritura JSON con cache en memoria
+    ├── data/
+    │   └── contactos.json      # Seed de personajes (trackeado en git)
+    └── src/
+        ├── controllers/        # auth, mensajes, perfil, contactos
+        ├── services/           # Lógica de negocio por dominio
+        ├── routes/             # Definición de rutas REST
+        └── middleware/
+            └── auth.middleware.js
 ```
-
-> El build de producción (`DeluleBot-build/`) se genera con `npm run build` y no se sube al repositorio.
 
 ---
 
@@ -70,88 +71,62 @@ DeluleBot/
 
 ## Instalación
 
-### 1. Clonar el repositorio
-
 ```bash
 git clone https://github.com/aye1104/DeluleBot.git
-cd DeluleBot
-```
-
-### 2. Instalar dependencias del backend
-
-```bash
-cd delulebot-backend
+cd DeluleBot/delulebot-backend
 npm install
-```
-
-### 3. Configurar variables de entorno
-
-```bash
 cp .env.example .env
 ```
 
-El archivo `.env` mínimo:
-
-```env
-PORT=3000
-```
-
-### 4. Instalar dependencias del frontend y generar el build
-
-```bash
-cd ../delulebot-frontend
-npm install
-npm run build
-```
+Editá `.env` y cambiá `SESSION_SECRET` por una clave aleatoria larga.
 
 ---
 
-## Correr en producción
+## Correr el proyecto
 
-```bash
-cd delulebot-backend
-npm start
-```
-
-Abrir en el navegador: [http://localhost:3000](http://localhost:3000)
-
----
-
-## Correr en desarrollo
-
-Se necesitan **dos terminales**:
-
-**Terminal 1 — Backend:**
 ```bash
 cd delulebot-backend
 npm run dev
 ```
 
-**Terminal 2 — Frontend (Vite con proxy):**
-```bash
-cd delulebot-frontend
-npm run dev
-```
-
-Abrir en el navegador: [http://localhost:5173](http://localhost:5173)
-
----
-
-## Seguridad
-
-- Token de sesión exclusivamente en **cookie HttpOnly** — inaccesible desde JavaScript
-- Contraseñas hasheadas con `crypto.pbkdf2Sync` + salt aleatorio (10.000 iteraciones)
-- Rotación de token en cada inicio de sesión
-- Datos aislados por usuario — cada usuario solo accede a sus propios mensajes y perfil
-- Validación en cliente y servidor
-- Sin riesgo de XSS — React renderiza mensajes como texto plano
-- CORS restringido a orígenes conocidos
+Abrí [http://localhost:3000](http://localhost:3000). El backend sirve el frontend estático directamente — no se necesita una segunda terminal.
 
 ---
 
 ## Variables de entorno
 
-| Variable   | Descripción                                                        | Default |
-|------------|--------------------------------------------------------------------|---------|
-| `PORT`     | Puerto del servidor Express                                        | `3000`  |
-| `NODE_ENV` | Entorno (`production` activa `secure` en la cookie de sesión)      | —       |
+| Variable         | Descripción                                                   | Default |
+|------------------|---------------------------------------------------------------|---------|
+| `PORT`           | Puerto del servidor                                           | `3000`  |
+| `SESSION_SECRET` | Clave secreta para firmar la cookie de sesión                 | —       |
+| `NODE_ENV`       | `production` activa `secure: true` en la cookie de sesión     | —       |
+
+---
+
+## Seguridad
+
+- Sesión server-side con `express-session` — cookie `HttpOnly`, `SameSite: strict`
+- Contraseñas con PBKDF2 + salt aleatorio, nunca en texto plano
+- Rate limiting: máx. 20 intentos cada 15 min en rutas de auth
+- XSS prevenido: todo contenido de usuario se escapa con `escapeHtml()` antes de insertar en `innerHTML`
+- URLs de foto validadas con `safeFoto()` — solo `/assets/` o data URLs de imagen
+- Datos aislados por usuario — cada usuario accede únicamente a sus propios mensajes y perfil
+
+---
+
+## API
+
+| Método   | Ruta                                          | Descripción                     |
+|----------|-----------------------------------------------|---------------------------------|
+| `POST`   | `/api/auth/registro`                          | Crear cuenta                    |
+| `POST`   | `/api/auth/login`                             | Iniciar sesión                  |
+| `POST`   | `/api/auth/logout`                            | Cerrar sesión                   |
+| `GET`    | `/api/perfil`                                 | Obtener perfil del usuario      |
+| `PUT`    | `/api/perfil`                                 | Actualizar perfil / foto        |
+| `GET`    | `/api/contactos`                              | Listar personajes disponibles   |
+| `GET`    | `/api/contactos/:id/mensajes`                 | Historial de mensajes           |
+| `POST`   | `/api/contactos/:id/mensajes`                 | Enviar mensaje                  |
+| `PATCH`  | `/api/contactos/:id/mensajes/:msgId/status`   | Actualizar estado del mensaje   |
+| `PATCH`  | `/api/contactos/:id/mensajes/:msgId/reaction` | Agregar reacción                |
+| `DELETE` | `/api/contactos/:id/mensajes/:msgId`          | Eliminar mensaje (soft delete)  |
+| `DELETE` | `/api/contactos/:id/mensajes`                 | Borrar conversación             |
