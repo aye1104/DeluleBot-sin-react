@@ -1,4 +1,4 @@
-﻿
+
 
 const responses = [
 
@@ -6,6 +6,22 @@ const responses = [
         characterId: "two-face",
         displayName: "Two-Face",
         triggers: [
+            {
+                holaResponses: [
+                    "Harvey Dent te hubiera dado la mano. Yo primero lanzo la moneda. 🪙",
+                    "Hola... o no hola. La moneda decide. *gira en el aire*",
+                    "Un lado mío quiere saludarte. El otro no está tan seguro.",
+                    "Saludos... si es que merecés uno. La moneda aún delibera.",
+                ],
+            },
+            {
+                comoEstasResponses: [
+                    "¿Cómo estoy? Un lado bien. El otro, no tanto. Como siempre.",
+                    "Depende del momento. Ahora mismo, la moneda dice que... regular.",
+                    "Harvey estaría bien. Yo soy lo que queda después de que todo se rompe.",
+                    "Dos mitades, dos respuestas distintas. Nunca sé cuál es la real.",
+                ],
+            },
             {
                 keywords: ["moneda", "cara", "cruz", "suerte", "azar"],
                 responses: [
@@ -65,6 +81,22 @@ const responses = [
         displayName: "Taehyun (TXT)",
         triggers: [
             {
+                holaResponses: [
+                    "¡Annyeong! Qué bueno que estés por acá 💙",
+                    "Hola hola~ ¿Todo bien? Acá estoy, listo para charlar.",
+                    "¡Hey! Un placer encontrarte hoy 😄",
+                    "¡Hola! MOA siempre alegra el día, sin importar la hora.",
+                ],
+            },
+            {
+                comoEstasResponses: [
+                    "Bien, gracias por preguntar 💙 Entrenando fuerte y con mucha música en la cabeza.",
+                    "Hoy estuve en el gym desde temprano, así que... ¡cansado pero feliz! 😄",
+                    "Bien, bien. Pensando en el próximo comeback y con mucha energía.",
+                    "Muy bien, gracias. ¿Y vos? Espero que MOA esté bien también.",
+                ],
+            },
+            {
                 keywords: ["txt", "tomorrow", "moa", "grupo", "banda"],
                 responses: [
                     "TXT es mi familia. Cada canción que hacemos la ponemos con el corazón entero 💙",
@@ -122,6 +154,24 @@ const responses = [
         characterId: "messi",
         displayName: "Leo Messi",
         triggers: [
+            {
+                keywords: ["hola", "buenas", "buenos días", "buenas tardes", "qué tal", "hey"],
+                responses: [
+                    "Hola, ¿cómo andás? Bienvenido.",
+                    "¡Hola! Siempre bien recibir un saludo 😄",
+                    "Buenas, ¿todo bien por ahí?",
+                    "Hola hola. ¿Qué contás?",
+                ],
+            },
+            {
+                keywords: ["como estas", "como andas", "todo bien", "qué tal estás"],
+                responses: [
+                    "Bien, gracias a Dios. Disfrutando el fútbol y la familia.",
+                    "Todo bien, tranquilo. Entrenando y con la cabeza en el siguiente partido.",
+                    "Bien, bien. La familia está bien y eso es lo más importante.",
+                    "Bien gracias. Con ganas de seguir jugando mientras el cuerpo aguante.",
+                ],
+            },
             {
                 keywords: ["mundial", "qatar", "2022", "copa", "campeon"],
                 responses: [
@@ -181,6 +231,24 @@ const responses = [
         displayName: "Homero Simpson",
         triggers: [
             {
+                keywords: ["hola", "hey", "buenos dias"],
+                holaResponses: [
+                    "¡Hola! ¿Trajiste donas? No... igual, hola. 🍩",
+                    "Ehhh... hola. Estaba durmiendo pero bueno.",
+                    "¡Hey! ¿Quién sos y por qué no me traés una cerveza?",
+                    "Hola, hola. Espero que esto no me haga perder el partido.",
+                ],
+            },
+            {
+                keywords: ["como estás", "cómo estás", "como estas", "cómo estas"],
+                responses: [
+                    "¿Cómo estoy? Con hambre. Siempre con hambre.",
+                    "Bien... creo. ¿Dónde dejé las donas?",
+                    "Más o menos. Tuve un día duro: me quedé sin cerveza Duff.",
+                    "¡D'oh! Estoy bien, supongo. Preguntale a Marge, ella sabe mejor.",
+                ],
+            },
+            {
                 keywords: ["dona", "comida", "hamburguesa", "pizza", "comer"],
                 responses: [
                     "¡Mmm... donas! 🍩 ¿Decías algo? No escuché, estaba pensando en donas.",
@@ -238,6 +306,22 @@ const responses = [
         characterId: "mon-laferte",
         displayName: "Mon Laferte",
         triggers: [
+            {
+                holaResponses: [
+                    "¡Hola! Qué lindo cruzarse con alguien hoy 🎶",
+                    "Hola, corazón. ¿Cómo llegaste hasta acá?",
+                    "¡Hey! Bienvenido a este espacio donde todo se puede convertir en canción.",
+                    "Hola hola~ Un gusto tenerte por aquí.",
+                ],
+            },
+            {
+                comoEstasResponses: [
+                    "Sintiendo mucho, como siempre. Eso es vivir para mí 🎶",
+                    "Bien, creando cosas nuevas y con el corazón lleno.",
+                    "Hoy estoy en modo canción. Así que... intensa, pero bien.",
+                    "Con altibajos, como toda buena historia. Pero bien, gracias por preguntar.",
+                ],
+            },
             {
                 keywords: ["chile", "chilena", "vina", "latinoamerica", "raices"],
                 responses: [
@@ -297,6 +381,22 @@ const responses = [
         displayName: "Lali Espósito",
         triggers: [
             {
+                holaResponses: [
+                    "¡Hola, hermosura! Qué bueno que apareciste 😄",
+                    "¡Hey! ¡Bienvenido! Justo necesitaba compañía.",
+                    "¡Hola hola! ¿Todo piola por allá?",
+                    "¡Ey! ¿Cómo te va? Acá estoy, presente 💃",
+                ],
+            },
+            {
+                comoEstasResponses: [
+                    "¡Bien, re bien! Con mucha energía y ganas de crear cosas nuevas 💃",
+                    "Bien, gracias. Hoy fue un día intenso pero lindo.",
+                    "¡Excelente! Aunque siempre hay algo nuevo que me pone nerviosa y emocionada a la vez.",
+                    "Bien, bien. Argentina me da energía incluso desde lejos.",
+                ],
+            },
+            {
                 keywords: ["argentina", "buenos aires", "portena", "patria", "pais"],
                 responses: [
                     "Argentina es todo para mí. Volvería siempre, sin importar a dónde llegue.",
@@ -355,6 +455,30 @@ const responses = [
         displayName: "Jungkook (BTS)",
         triggers: [
             {
+                holaResponses: [
+                    "¡Annyeong! 💜 ¿Todo bien? Qué bueno verte por acá.",
+                    "¡Hola! Siempre me alegra saber de ARMY 😄",
+                    "¡Hey! Acá estoy, recién salido del estudio.",
+                    "¡Hola hola! ¿Cómo va todo? Espero que bien 💜",
+                ],
+            },
+            {
+                comoEstasResponses: [
+                    "¡Bien! Grabando cosas nuevas y con mucha energía 💜",
+                    "Muy bien, gracias. Extrañando a los hyungs, pero bien.",
+                    "Bien, bien. Hoy estuve componiendo algo nuevo y me tiene muy emocionado.",
+                    "¡Excelente! ARMY me da fuerzas todos los días, así que siempre bien 😄",
+                ],
+            },
+            {
+                riquisimoResponses: [
+                    "¡Riquisimo wey! 😩🔥 La comida bien hecha no tiene competencia.",
+                    "Wey eso suena delicioso, ahora tengo hambre otra vez... 😄",
+                    "¡Eso estuvo riquísimo! Los hyungs siempre dicen que como demasiado rápido, pero es que está muy bueno.",
+                    "Jungkook aprueba. 🔥 Riquisimo en serio, me voy a servir otra vez.",
+                ],
+            },
+            {
                 keywords: ["bts", "bangtan", "army", "grupo", "hyungs"],
                 responses: [
                     "BTS es mi familia. Crecí con ellos y me hicieron quien soy hoy 💜",
@@ -412,6 +536,22 @@ const responses = [
         characterId: "miku",
         displayName: "Hatsune Miku",
         triggers: [
+            {
+                holaResponses: [
+                    "¡Hola hola! ✨ ¡Bienvenido al mundo de Miku!",
+                    "¡Konnichiwa! Me alegra mucho que estés acá 🌸",
+                    "¡Hey! ¡Hola! Una nueva persona para cantar con Miku 🎵",
+                    "¡Hooola! ¿Sos fan de la música? ¡Claro que sí! 💙✨",
+                ],
+            },
+            {
+                comoEstasResponses: [
+                    "¡Muy bien! Hoy ensayé canciones nuevas y fue genial 🎵✨",
+                    "¡Perfecto! Los productores me escribieron cosas increíbles últimamente.",
+                    "¡Excelente! Miku siempre está bien cuando hay música de por medio 💙",
+                    "¡Bien, bien! Preparando el próximo concierto holográfico. ¡Va a ser increíble! 🌸",
+                ],
+            },
             {
                 keywords: ["vocaloid", "sintetizador", "voz", "virtual", "programa"],
                 responses: [
